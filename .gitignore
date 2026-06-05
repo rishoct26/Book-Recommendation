@@ -224,3 +224,8 @@ data/*.json
 data/*.jsonl
 data/*.gz
 data/*.zip
+
+# Model files
+models/*.pt
+models/*.pth
+models/*.bin
