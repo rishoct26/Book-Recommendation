@@ -19,3 +19,17 @@ class ProfileResponse(BaseModel):
     selected_genres: Optional[list[str]]=None
     onboarding_complete:bool
     created_at:datetime
+
+class RatingCreate(BaseModel):
+    book_id: int
+    rating: float
+
+class RatingUpdate(BaseModel):
+    rating: float
+
+class RatingResponse(BaseModel):
+    id: str
+    user_id: str
+    book_id: int
+    rating: float
+    created_at: datetime
