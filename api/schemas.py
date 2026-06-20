@@ -33,3 +33,17 @@ class RatingResponse(BaseModel):
     book_id: int
     rating: float
     created_at: datetime
+
+class ReadingListCreate(BaseModel):
+    book_id:int
+    status:str
+
+class ReadingListUpdate(BaseModel):
+    status: str
+
+class ReadingListResponse(BaseModel):
+    id:str
+    user_id:str
+    book_id:int
+    status:str
+    added_at:datetime
