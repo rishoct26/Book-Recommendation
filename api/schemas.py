@@ -47,3 +47,27 @@ class ReadingListResponse(BaseModel):
     book_id:int
     status:str
     added_at:datetime
+
+class ReviewCreate(BaseModel):
+    book_id: int
+    title: Optional[str]=None
+    body: str
+    rating: Optional[float]=None
+    has_spoiler: bool = False 
+
+class ReviewUpdate(BaseModel):
+    title: Optional[str]=None
+    body: Optional[str]=None
+    rating: Optional[float]=None
+    has_spoiler: Optional[bool]=None
+
+class ReviewResponse(BaseModel):
+    id:str
+    user_id: str
+    book_id:int
+    title:Optional[str]=None
+    body:str
+    rating:Optional[float]=None
+    has_spoiler:bool
+    created_at:datetime
+    updated_at:datetime
