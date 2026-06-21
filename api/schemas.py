@@ -71,3 +71,11 @@ class ReviewResponse(BaseModel):
     has_spoiler:bool
     created_at:datetime
     updated_at:datetime
+
+class ActivityFeedResponse(BaseModel):
+    id:str
+    user_id:str
+    action_type:str
+    book_id: Optional[int]=None
+    review_id: Optional[str]=None
+    created_at:datetime
