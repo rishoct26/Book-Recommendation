@@ -79,3 +79,15 @@ class ActivityFeedResponse(BaseModel):
     book_id: Optional[int]=None
     review_id: Optional[str]=None
     created_at:datetime
+
+class RecommendationRequest(BaseModel):
+    user_id: str
+    n: int = 10
+
+class ColdStartRequest(BaseModel):
+    genres: list[str]
+    n: int = 10
+
+class RecommendationResponse(BaseModel):
+    book_id: int 
+    score: float
