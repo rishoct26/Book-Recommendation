@@ -81,7 +81,7 @@ class ActivityFeedResponse(BaseModel):
     created_at:datetime
 
 class RecommendationRequest(BaseModel):
-    user_id: str
+    user_id: int
     n: int = 10
 
 class ColdStartRequest(BaseModel):
