@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 from contextlib import asynccontextmanager
-from api.routers import profiles, ratings, reading_list, reviews, social, recommendations
+from api.routers import profiles, ratings, reading_list, reviews, social, recommendations, books
 import numpy as np
 import torch
 import pandas as pd
@@ -34,9 +34,8 @@ async def lifespan(app: FastAPI):
     app.state.book2idx = checkpoint['book2idx']
     app.state.idx2bookid = {v: k for k, v in checkpoint['book2idx'].items()}
     app.state.book_embeddings = np.load(os.path.join("data", "book_embeddings.npy"))
-    books = pd.read_csv(os.path.join("data", "books.csv"))
-    app.state.bookid2row = {row['id']: idx for idx, row in books.iterrows()}
-
+    books_df = pd.read_csv(os.path.join("data", "books.csv"))
+    app.state.bookid2row = {row['id']: idx for idx, row in books_df.iterrows()}
     print("Model and embeddings loaded at startup")
     yield
     print("Shutting down")
@@ -61,6 +60,7 @@ app.include_router(reading_list.router)
 app.include_router(reviews.router)
 app.include_router(social.router)
 app.include_router(recommendations.router)
+app.include_router(books.router)
 
 @app.get("/health")
 def health_check():

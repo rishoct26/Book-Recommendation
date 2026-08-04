@@ -91,3 +91,13 @@ class ColdStartRequest(BaseModel):
 class RecommendationResponse(BaseModel):
     book_id: int 
     score: float
+
+class BookResponse(BaseModel):
+    id: int
+    title: str
+    authors: Optional[str] = None
+    original_publication_year: Optional[float] = None
+    average_rating: Optional[float] = None
+    ratings_count: Optional[int] = None
+    image_url: Optional[str] = None
+    language_code: Optional[str] = None
