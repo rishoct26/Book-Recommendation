@@ -62,6 +62,7 @@ app.include_router(social.router)
 app.include_router(recommendations.router)
 app.include_router(books.router)
 
+
 @app.get("/health")
 def health_check():
     return {"status": "ok"}
