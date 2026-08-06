@@ -1,11 +1,12 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from api.dependencies import get_current_user
 from api.database import supabase
 from api.schemas import RatingCreate, RatingUpdate, RatingResponse
 
 router = APIRouter(prefix="/ratings", tags=["ratings"])
 
 @router.post("/")
-def create_rating(rating: RatingCreate, user_id: str):
+def create_rating(rating: RatingCreate, user_id: str = Depends(get_current_user)):
     response = supabase.table("user_ratings").insert({
         "user_id": user_id,
         "book_id": rating.book_id,
@@ -23,8 +24,8 @@ def get_ratings(user_id: str):
 
     return response.data
 
-@router.put("/{user_id}/{book_id}")
-def update_rating(user_id: str, book_id: int, rating: RatingUpdate):
+@router.put("/{book_id}")
+def update_rating(book_id: int, rating: RatingUpdate, user_id: str = Depends(get_current_user)):
     response = supabase.table("user_ratings").update({
         "rating": rating.rating
     }).eq("user_id", user_id).eq("book_id", book_id).execute()
@@ -34,8 +35,8 @@ def update_rating(user_id: str, book_id: int, rating: RatingUpdate):
 
     return response.data[0]
 
-@router.delete("/{user_id}/{book_id}")
-def delete_rating(user_id: str, book_id: int):
+@router.delete("/{book_id}")
+def delete_rating(book_id: int, user_id: str = Depends(get_current_user)):
     supabase.table("user_ratings").delete().eq("user_id", user_id).eq("book_id", book_id).execute()
 
     return {"message": "Rating deleted successfully"}

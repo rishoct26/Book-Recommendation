@@ -1,4 +1,5 @@
-from fastapi import APIRouter, HTTPException, Request
+from fastapi import APIRouter, HTTPException, Request, Depends
+from api.dependencies import get_current_user
 from api.database import supabase
 from api.schemas import RecommendationRequest, ColdStartRequest, RecommendationResponse
 import numpy as np
@@ -30,7 +31,7 @@ class HybridModel(nn.Module):
 router = APIRouter(prefix="/recommendations", tags=["recommendations"])
 
 @router.post("/", response_model=list[RecommendationResponse])
-def get_recommendations(request: RecommendationRequest, req: Request):
+def get_recommendations(request: RecommendationRequest, req: Request, user_id: str = Depends(get_current_user)):
     model = req.app.state.model
     user2idx = req.app.state.user2idx
     book2idx = req.app.state.book2idx
